@@ -8,7 +8,7 @@ class Window:
     def __init__(self):
 
         self.root = Tk()
-        self.anchor = 7
+        self.anchor = 8
         self.count = self.anchor
         self.bool = False
         self.mouse_pressed = False
@@ -24,11 +24,26 @@ class Window:
         #self.b4.grid(row=5,column=0)
         #self.b4.bind('<Button-1>', self.hold_thread)
         #self.b4.bind('<ButtonRelease-1>', self.release)
+        self.root.bind('<Return>', self.get_text)
         self.b5 = Button(self.root, text="OFF", command=self.toggle, bg="red")
         self.b5.grid(row=5,column=0)
-        self.e1 = Entry(self.root).grid(row=6, column=0)
+        self.e1 = Entry(self.root, width=30, borderwidth=3)
+        self.e1.grid(row=6, column=0)
+        self.exit = Button(self.root, text="Exit", command=self.root.quit)
+        self.exit.grid(row=self.anchor-1,column=0)
+        #self.b5 = Button(self.root, text="Print", command=self.get_text)
+        #self.b5.grid(row=7, column=0)
 
     def toggle(self):
+
+        if self.count == self.anchor + 5:
+
+            for i in self.label_list:
+
+                i.destroy()
+                
+            self.label_list = []
+            self.count = self.anchor
 
         if self.bool:
 
@@ -46,7 +61,9 @@ class Window:
             self.bool = True
             self.count += 1
 
-        if self.count == self.anchor + 6:
+    def get_text(self, entry):
+
+        if self.count == self.anchor + 5:
 
             for i in self.label_list:
 
@@ -54,6 +71,14 @@ class Window:
                 
             self.label_list = []
             self.count = self.anchor
+
+        self.label_list.append(Label(self.root, text=self.e1.get(),font=("Arial",16)))
+        self.label_list[-1].grid(row=self.count,column=0)                      
+        self.bool = False
+        self.count += 1
+        self.e1.delete(0, END)
+        #self.e1.instert(0, number)
+        
 
 """
     def hold_thread(self, event):
