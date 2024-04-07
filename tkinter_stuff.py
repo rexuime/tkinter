@@ -8,6 +8,7 @@ class Window:
     def __init__(self):
 
         self.root = Tk()
+        self.root.geometry("1200x600")
         self.anchor = 8
         self.count = self.anchor
         self.bool = False
