@@ -1,5 +1,6 @@
 from tkinter import *
 from threading import *
+from PIL import ImageTk,Image
 import re
 import time
 
@@ -8,7 +9,6 @@ class Window:
     def __init__(self):
 
         self.root = Tk()
-        self.root.geometry("1200x600")
         self.anchor = 8
         self.count = self.anchor
         self.bool = False
@@ -30,6 +30,11 @@ class Window:
         self.b5.grid(row=5,column=0)
         self.e1 = Entry(self.root, width=30, borderwidth=3)
         self.e1.grid(row=6, column=0)
+        self.img = ImageTk.PhotoImage(Image.open("cat.jpg"))
+        self.myLabel3 = Label(self.root, image=self.img).grid(row= 0, column=1)
+        self.myLabel4 = Label(self.root, image=self.img).grid(row= 0, column=2)
+        self.status = Label(self.root, text=str(self.count - self.anchor) + " of 5", bd=1, relief=SUNKEN, anchor=E)
+        self.status.grid(row = 15, column=0, columnspan=3, sticky=W+E)
         self.exit = Button(self.root, text="Exit", command=self.root.quit)
         self.exit.grid(row=self.anchor-1,column=0)
         #self.b5 = Button(self.root, text="Print", command=self.get_text)
@@ -48,19 +53,23 @@ class Window:
 
         if self.bool:
 
+            self.count += 1
             self.b5.configure(text="OFF",bg="red")
+            self.status.configure(text=str(self.count - self.anchor) + " of 5")
             self.label_list.append(Label(self.root, text="Pressed",font=("Arial",16)))
             self.label_list[-1].grid(row=self.count,column=0)                      
             self.bool = False
-            self.count += 1
+
 
         else:
 
+            self.count += 1
             self.b5.configure(text="ON",bg="green")
+            self.status.configure(text=str(self.count - self.anchor) + " of 5")
             self.label_list.append(Label(self.root, text="Pressed",font=("Arial",16)))
             self.label_list[-1].grid(row=self.count,column=0)
             self.bool = True
-            self.count += 1
+
 
     def get_text(self, entry):
 
